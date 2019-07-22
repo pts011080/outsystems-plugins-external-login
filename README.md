@@ -5,7 +5,7 @@ Cordova plugin to request a Login External in another applicatication.
 # API
 Methods:
 
-* **login**(options: JSONArray, success: function, error: function)
+* **login**(options: JSON, success: function, error: function)
     * Call to request a Login External. Example: 
     ```javascript
         cordova.plugins.LoginExternal.login(

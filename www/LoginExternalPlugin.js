@@ -10,7 +10,7 @@ var exec = require('cordova/exec');
  *              {key:"key1",value: "A"},
                 {key:"key2",value: "B"}
  *            ]
- *       }]
+ *       }
  * @param {Function} success - The callback which will be called when switch to settings is successful.
  * @param {Function} error - The callback which will be called when switch to settings encounters an error.
  */
