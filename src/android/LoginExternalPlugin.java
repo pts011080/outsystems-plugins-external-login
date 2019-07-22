@@ -1,8 +1,7 @@
 package com.outsystems.loginexternalplugin;
 
-import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
-
+import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +12,7 @@ import org.json.JSONObject;
  */
 public class LoginExternalPlugin extends CordovaPlugin {
 
-    private static final String TAG = "SampleLoginPlugin";
+    private static final String TAG = "LoginExternalPlugin";
     private CallbackContext callbackContext;
     private static final int LOGIN_SUCCESS_CODE = 9001;
 

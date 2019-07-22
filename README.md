@@ -8,7 +8,7 @@ Methods:
 * **login**(options: JSON, success: function, error: function)
     * Call to request a Login External. Example: 
     ```javascript
-        cordova.plugins.LoginExternal.login(
+        cordova.plugins.LoginExternalPlugin.login(
               [{
                 "action": "com.outsystems.example.Login",
                  "inputExtras": [
