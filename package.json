@@ -1,0 +1,14 @@
+{
+  "name": "com.outsystems.loginexternalplugin",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "com.outsystems.loginexternalplugin",
+    "platforms": []
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Paulo Camilo",
+  "license": "ISC"
+}
