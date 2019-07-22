@@ -98,7 +98,7 @@ public class SendIntentPlugin extends CordovaPlugin {
         if (this.cordova.getActivity().getPackageManager().resolveActivity(intentLogin, 0) != null) {
             this.cordova.startActivityForResult(this, intentLogin, LOGIN_SUCCESS_CODE);
         } else {
-            callbackContext.error(Actions.INVALID.getAction());
+            callbackContext.error(Actions.INVALID.getDescription());
         }
     }
 
