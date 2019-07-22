@@ -1,5 +1,9 @@
 package com.outsystems.loginexternalplugin;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
@@ -16,7 +20,7 @@ public class LoginExternalPlugin extends CordovaPlugin {
     private static final int LOGIN_SUCCESS_CODE = 9001;
 
     private static final String ACTION = "action";
-    private static final String PACKAGE_APPLICATION = "package";
+    private static final String PACKAGE_NAME = "package";
     private static final String INPUT_EXTRAS = "inputExtras";
     private static final String ACCESS_TOKEN = "access_token";
 
@@ -34,11 +38,8 @@ public class LoginExternalPlugin extends CordovaPlugin {
         if (action != null) {
 
             switch (Actions.getActionByName(action)) {
-                case LOGIN:
-                    requestExternalLogin(args);
-                    PluginResult pr = new PluginResult(PluginResult.Status.NO_RESULT);
-                    pr.setKeepCallback(true);
-                    callbackContext.sendPluginResult(pr);
+                case SEND_INTENT:
+                    sendIntent(args);
                     return true;
                 case INVALID:
                     callbackContext.error(Actions.INVALID.getDescription());
@@ -55,51 +56,51 @@ public class LoginExternalPlugin extends CordovaPlugin {
     }
 
     /**
-     * The login method in another Application
+     * The sendIntent method in another Application
      *
      * @param args some args to use in another Application
      */
-    private void login(JSONArray args) throws JSONException {
+    private void sendIntent(JSONArray args) throws JSONException {
         JSONObject object = args.getJSONObject(0);
 
-        String packageName = object.getString(ACTION);
+        String packageName = object.getString(PACKAGE_NAME);
         String action = object.getString(ACTION);
         JSONArray inputExtras = object.getJSONArray(INPUT_EXTRAS);
 
-        Intent intentLogin = new Intent(action);
+        Intent intentLogin = new Intent(packageName + "." + action);
         intentLogin.setFlags(0);
 
-        if (inputExtras != null && args.length() > 0) {
-            for (int i = 0; i < args.length(); i++) {
+        try {
+            if (inputExtras != null && inputExtras.length() > 0) {
+                for (int i = 0; i < inputExtras.length(); i++) {
 
-                JSONObject obj = args.getJSONObject(i);
+                    JSONObject obj = inputExtras.getJSONObject(i);
 
-                String key = obj.getString("key");
-                String value = obj.getString("value");
+                    String key = obj.getString("key");
+                    String value = obj.getString("value");
 
-                intentLogin.putExtra(key, value);
+                    intentLogin.putExtra(key, value);
+                }
             }
-        }
 
-        callAnotherApplication(intentLogin, packageName, action);
-        PluginResult pr = new PluginResult(PluginResult.Status.NO_RESULT);
-        pr.setKeepCallback(true);
-        callbackContext.sendPluginResult(pr);
+            callAnotherApplication(intentLogin);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            callbackContext.error(e.getMessage());
+        }
     }
 
     /**
      * Call another application using package name
      *
      * @param intentLogin the intent with some attributes
-     * @param packageName the package from another application
-     * @param action the action used to open your activity in another applicaiton
      */
-    private void callAnotherApplication(Intent intentLogin, String packageName, String action) {
-        if (isPackageInstalled(packageName)
-                || this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0) != null) {
-            this.cordova.getActivity().startActivityForResult(intentLogin, LOGIN_SUCCESS_CODE);
+    private void callAnotherApplication(Intent intentLogin) {
+        if (this.cordova.getActivity().getPackageManager().resolveActivity(intentLogin, 0) != null) {
+            this.cordova.startActivityForResult(this, intentLogin, LOGIN_SUCCESS_CODE);
         } else {
-            callbackContext.error("You don't have the application installed.");
+            callbackContext.error(Actions.INVALID.getAction());
         }
     }
 
@@ -128,7 +129,7 @@ public class LoginExternalPlugin extends CordovaPlugin {
 
     private enum Actions {
 
-        LOGIN("login", "Login action using an external application"),
+        SEND_INTENT("sendIntent", "The send intent action is used to execute action in another application."),
         INVALID("", "Invalid or not found action!");
 
         private String action;
@@ -162,16 +163,6 @@ public class LoginExternalPlugin extends CordovaPlugin {
                 }
             }
             return INVALID;
-        }
-    }
-
-    public boolean isPackageInstalled(String packageName) {
-        PackageManager pm = getPackageManager();
-        try {
-            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
         }
     }
 }
