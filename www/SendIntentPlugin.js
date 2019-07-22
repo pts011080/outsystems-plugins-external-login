@@ -1,12 +1,11 @@
 var exec = require('cordova/exec');
 /**
- *  The method sent intent is used to execute a Login in external Application
+ *  The method sent intent is used to execute an external intent in another Application
  * 
  *  @param {JSON} options - The options which wil be used to call an external application
  *      Example: 
  *      {
- *          action: "Login",
- *          package: "com.outsystems.example.Example",
+ *          "action": "com.outsystems.example.Example.Login",
  *          inputExtras : [
  *              {key:"key1",value: "A"},
                 {key:"key2",value: "B"}
