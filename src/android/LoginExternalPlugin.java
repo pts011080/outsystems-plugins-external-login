@@ -15,7 +15,6 @@ public class LoginExternalPlugin extends CordovaPlugin {
 
     private static final String TAG = "SampleLoginPlugin";
     private CallbackContext callbackContext;
-    private static final String LOGIN_EXTERNAL_APP = "com.outsystems.experts.login";
     private static final int LOGIN_SUCCESS_CODE = 9001;
 
     private static final String ACTION = "action";
@@ -26,7 +25,7 @@ public class LoginExternalPlugin extends CordovaPlugin {
      * Executes the request and returns JSONObject
      *
      * @param action            The action to execute.
-     * @param args              JSONArray of arguments for the plugin.
+     * @param args              JSONArray used to call another application with some parameters.
      * @param callbackContext   The callback context used when calling back into JavaScript.
      * @return                  True when the action was valid, false otherwise.
      */
