@@ -20,7 +20,6 @@ public class SendIntentPlugin extends CordovaPlugin {
     private static final int LOGIN_SUCCESS_CODE = 9001;
 
     private static final String ACTION = "action";
-    private static final String PACKAGE_NAME = "package";
     private static final String INPUT_EXTRAS = "inputExtras";
     private static final String ACCESS_TOKEN = "access_token";
 
@@ -63,11 +62,10 @@ public class SendIntentPlugin extends CordovaPlugin {
     private void sendIntent(JSONArray args) throws JSONException {
         JSONObject object = args.getJSONObject(0);
 
-        String packageName = object.getString(PACKAGE_NAME);
         String action = object.getString(ACTION);
         JSONArray inputExtras = object.getJSONArray(INPUT_EXTRAS);
 
-        Intent intentLogin = new Intent(packageName + "." + action);
+        Intent intentLogin = new Intent(action);
         intentLogin.setFlags(0);
 
         try {
