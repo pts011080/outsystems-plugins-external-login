@@ -11,7 +11,7 @@ Methods:
         cordova.plugins.LoginExternalPlugin.login(
               [{
                 "action": "Login",
-                "package": "com.outsystems.example.Example"
+                "package": "com.outsystems.example.Example",
                 "inputExtras": [
                     {key:"key1",value: "A"},
                     {key:"key2",value: "B"}
