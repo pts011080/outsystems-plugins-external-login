@@ -1,9 +1,9 @@
 {
-  "name": "com.outsystems.loginexternalplugin",
+  "name": "com.outsystems.sendintentplugin",
   "version": "1.0.0",
   "description": "",
   "cordova": {
-    "id": "com.outsystems.loginexternalplugin",
+    "id": "com.outsystems.sendintentplugin",
     "platforms": []
   },
   "keywords": [

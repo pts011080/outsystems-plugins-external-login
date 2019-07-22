@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="com.outsystems.loginexternalplugin"
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="com.outsystems.sendintentplugin"
 	version="1.0.0"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>LoginExternalPlugin</name>
-	<js-module name="LoginExternalPlugin" src="www/LoginExternalPlugin.js">
-		<clobbers target="cordova.plugins.LoginExternalPlugin" />
+	<js-module name="SendIntentPlugin" src="www/SendIntentPlugin.js">
+		<clobbers target="cordova.plugins.SendIntentPlugin" />
 	</js-module>
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="LoginExternalPlugin">
+			<feature name="SendIntentPlugin">
 				<param name="android-package"
-					value="com.outsystems.loginexternalplugin.LoginExternalPlugin" />
+					value="com.outsystems.sendintentplugin.SendIntentPlugin" />
 			</feature>
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml" />
-		<source-file src="src/android/LoginExternalPlugin.java"
-			target-dir="src/com/outsystems/loginexternalplugin" />
+		<source-file src="src/android/SendIntentPlugin.java"
+			target-dir="src/com/outsystems/sendintentplugin" />
 	</platform>
 </plugin>

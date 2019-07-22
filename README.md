@@ -1,14 +1,14 @@
-# External login plugin 
+# Send Intent plugin
 
-Cordova plugin to request a Login External in another applicatication.
+Cordova plugin to request a intent external in another application.
 
 # API
 Methods:
 
-* **login**(options: JSON, success: function, error: function)
-    * Call to request a Login External. Example: 
+* **sendIntent**(options: JSON, success: function, error: function)
+    * Call to request a intent to login external. Example:
     ```javascript
-        cordova.plugins.LoginExternalPlugin.login(
+        cordova.plugins.SendIntentExternalPlugin.sendIntent(
               [{
                 "action": "Login",
                 "package": "com.outsystems.example.Example",
@@ -17,7 +17,7 @@ Methods:
                     {key:"key2",value: "B"}
                  ]
             }],
-            function(success){console.log(success),
+            function(success){console.log(success)},
             function(error){console.log(error)});
     ```
     

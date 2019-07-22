@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LoginExternalPlugin.iml" filepath="$PROJECT_DIR$/.idea/LoginExternalPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SentIntentPlugin.iml" filepath="$PROJECT_DIR$/.idea/SentIntentPlugin.iml" />
     </modules>
   </component>
 </project>

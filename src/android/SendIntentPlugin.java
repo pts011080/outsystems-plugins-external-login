@@ -1,4 +1,4 @@
-package com.outsystems.loginexternalplugin;
+package com.outsystems.sendintentplugin;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * The login external plugin implemented for Android.
+ * The send intent external plugin implemented for Android.
  */
-public class LoginExternalPlugin extends CordovaPlugin {
+public class SendIntentPlugin extends CordovaPlugin {
 
-    private static final String TAG = "LoginExternalPlugin";
+    private static final String TAG = "SendIntentPlugin";
     private CallbackContext callbackContext;
     private static final int LOGIN_SUCCESS_CODE = 9001;
 
