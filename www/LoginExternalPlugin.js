@@ -5,7 +5,8 @@ var exec = require('cordova/exec');
  *  @param {JSON} options - The options which wil be used to call an external application
  *      Example: 
  *      {
- *          "action": "com.outsystems.example.Example",
+ *          "action": "Login",
+ *          "package": "com.outsystems.example.Example",
  *           "inputExtras": [
  *              {key:"key1",value: "A"},
                 {key:"key2",value: "B"}

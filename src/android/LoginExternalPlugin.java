@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 /**
  * The login external plugin implemented for Android.
- * 
  */
 public class LoginExternalPlugin extends CordovaPlugin {
 
@@ -17,16 +16,17 @@ public class LoginExternalPlugin extends CordovaPlugin {
     private static final int LOGIN_SUCCESS_CODE = 9001;
 
     private static final String ACTION = "action";
+    private static final String PACKAGE_APPLICATION = "package";
     private static final String INPUT_EXTRAS = "inputExtras";
     private static final String ACCESS_TOKEN = "access_token";
 
     /**
      * Executes the request and returns JSONObject
      *
-     * @param action            The action to execute.
-     * @param args              JSONArray used to call another application with some parameters.
-     * @param callbackContext   The callback context used when calling back into JavaScript.
-     * @return                  True when the action was valid, false otherwise.
+     * @param action          The action to execute.
+     * @param args            JSONArray used to call another application with some parameters.
+     * @param callbackContext The callback context used when calling back into JavaScript.
+     * @return True when the action was valid, false otherwise.
      */
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         this.callbackContext = callbackContext;
@@ -62,6 +62,7 @@ public class LoginExternalPlugin extends CordovaPlugin {
     private void login(JSONArray args) throws JSONException {
         JSONObject object = args.getJSONObject(0);
 
+        String packageName = object.getString(ACTION);
         String action = object.getString(ACTION);
         JSONArray inputExtras = object.getJSONArray(INPUT_EXTRAS);
 
@@ -80,14 +81,26 @@ public class LoginExternalPlugin extends CordovaPlugin {
             }
         }
 
-        callAnotherApplication(intentLogin);
+        callAnotherApplication(intentLogin, packageName, action);
         PluginResult pr = new PluginResult(PluginResult.Status.NO_RESULT);
         pr.setKeepCallback(true);
         callbackContext.sendPluginResult(pr);
     }
 
-    private void callAnotherApplication(Intent intentLogin) {
-        this.cordova.getActivity().startActivityForResult(intentLogin, LOGIN_SUCCESS_CODE);
+    /**
+     * Call another application using package name
+     *
+     * @param intentLogin the intent with some attributes
+     * @param packageName the package from another application
+     * @param action the action used to open your activity in another applicaiton
+     */
+    private void callAnotherApplication(Intent intentLogin, String packageName, String action) {
+        if (isPackageInstalled(packageName)
+                || this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0) != null) {
+            this.cordova.getActivity().startActivityForResult(intentLogin, LOGIN_SUCCESS_CODE);
+        } else {
+            callbackContext.error("You don't have the application installed.");
+        }
     }
 
     @Override
@@ -149,6 +162,16 @@ public class LoginExternalPlugin extends CordovaPlugin {
                 }
             }
             return INVALID;
+        }
+    }
+
+    public boolean isPackageInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }
