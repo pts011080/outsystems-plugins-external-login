@@ -1,1 +1,1 @@
-"# External login plugin" 
+# External login plugin 
