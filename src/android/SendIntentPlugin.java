@@ -117,11 +117,13 @@ public class SendIntentPlugin extends CordovaPlugin {
                         callbackContext.success(response);
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
-                        callbackContext.error("Error to get the access_token value in another application.");
+                        callbackContext.error(e.getMessage());
                     }
                 } else {
-                    callbackContext.error("Error to get the access_token value in another application.");
+                    callbackContext.error("Error to get the access_token value.");
                 }
+            } else {
+                callbackContext.error("Error to get the access_token value.");
             }
         }
     }
