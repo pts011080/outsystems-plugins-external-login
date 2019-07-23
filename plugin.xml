@@ -7,7 +7,7 @@
 		<clobbers target="cordova.plugins.SendIntentPlugin" />
 	</js-module>
 
-	<preference name="APP_GROUP_NAME"> <!-- Variable used to populate the sharedUserId on App Cordova Manifest -->
+	<!-- <preference name="APP_GROUP_NAME"> -->
 	
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
@@ -16,9 +16,9 @@
 					value="com.outsystems.sendintentplugin.SendIntentPlugin" />
 			</feature>
 		</config-file>
-		<edit-config parent="/manifest" target="AndroidManifest.xml" mode="merge">
-			<manifest android:sharedUserId="$APP_GROUP_NAME"> <!-- Used to shared attributes in differentes applications. -->
-		</edit-config>
+		 <!--<edit-config parent="/manifest" target="AndroidManifest.xml" mode="merge">
+			<manifest android:sharedUserId="$APP_GROUP_NAME"/>
+		</edit-config> -->
 		<source-file src="src/android/SendIntentPlugin.java"
 			target-dir="src/com/outsystems/sendintentplugin" />
 	</platform>
