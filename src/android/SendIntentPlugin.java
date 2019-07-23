@@ -76,9 +76,25 @@ public class SendIntentPlugin extends CordovaPlugin {
                     JSONObject obj = inputExtras.getJSONObject(i);
 
                     String key = obj.getString("key");
-                    String value = obj.getString("value");
+                    Type type = Type.getTypeByName(obj.getString("type"));
 
-                    intentLogin.putExtra(key, value);
+                    switch (type){
+                        case BOOL:
+                            intentLogin.putExtra(key,obj.getBoolean("value"));
+                            break;
+                        case LONG:
+                            intentLogin.putExtra(key,obj.getLong("value"));
+                            break;
+                        case DOUBLE:
+                            intentLogin.putExtra(key,obj.getDouble("value"));
+                            break;
+                        case STRING:
+                            intentLogin.putExtra(key,obj.getString("value"));
+                            break;
+                        case INTEGER:
+                            intentLogin.putExtra(key,obj.getInt("value"));
+                            break;
+                    }
                 }
             }
 
@@ -164,6 +180,28 @@ public class SendIntentPlugin extends CordovaPlugin {
                 }
             }
             return INVALID;
+        }
+    }
+    private enum Type {
+        BOOL("bool"),
+        LONG("long"),
+        DOUBLE("double"),
+        STRING("string"),
+        INTEGER("int");
+
+        private String action;
+
+        Type(String action) {
+            this.action = action;
+        }
+
+        public static Type getTypeByName(String action) {
+            for (Type a : Type.values()) {
+                if (a.action.equalsIgnoreCase(action)) {
+                    return a;
+                }
+            }
+            return STRING;
         }
     }
 }

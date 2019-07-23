@@ -7,8 +7,8 @@ var exec = require('cordova/exec');
  *      {
  *          "action": "com.outsystems.example.Example.Login",
  *          inputExtras : [
- *              {key:"key1",value: "A"},
-                {key:"key2",value: "B"}
+ *              {key:"key1",value: "A", type: "string"},
+                {key:"key2",value: true, type: "bool"}
  *            ]
  *       }
  * @param {Function} success - The callback which will be called when switch to settings is successful.
