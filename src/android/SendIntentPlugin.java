@@ -65,7 +65,8 @@ public class SendIntentPlugin extends CordovaPlugin {
         String action = object.getString(ACTION);
         JSONArray inputExtras = object.getJSONArray(INPUT_EXTRAS);
 
-        Intent intentLogin = new Intent(action);
+        Intent intentLogin = new Intent();
+        intentLogin.setAction(action.trim());
         intentLogin.setFlags(0);
 
         try {
