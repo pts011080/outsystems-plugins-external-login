@@ -123,7 +123,7 @@ public class SendIntentPlugin extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (resultCode == Activity.RESULT_OK || requestCode == LOGIN_SUCCESS_CODE) {
+        if (resultCode == Activity.RESULT_OK) {
             if (intent.getExtras() != null && intent.getExtras().get(ACCESS_TOKEN) != null) {
                 String accessToken = (String) intent.getExtras().get(ACCESS_TOKEN);
                 if (accessToken != null) {
@@ -141,6 +141,8 @@ public class SendIntentPlugin extends CordovaPlugin {
             } else {
                 callbackContext.error("Error to get the access_token value.");
             }
+        } else {
+            callbackContext.error("Error to get the access_token value.");
         }
     }
 
