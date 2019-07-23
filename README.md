@@ -19,4 +19,5 @@ Methods:
             function(success){console.log(success)},
             function(error){console.log(error)});
     ```
+  - In additional, *inputExtras* attribute the types accepted is: "bool", "long", "double", "int" and "string".
     
