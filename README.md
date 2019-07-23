@@ -12,8 +12,8 @@ Methods:
               [{
                 "action": "com.outsystems.example.Example.Login",
                 "inputExtras": [
-                    {key:"key1",value: "A"},
-                    {key:"key2",value: "B"}
+                    {key:"key1",value: "A", type: "string"},
+                    {key:"key2",value: false, type: "bool"}
                  ]
             }],
             function(success){console.log(success)},
