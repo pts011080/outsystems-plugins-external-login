@@ -147,7 +147,7 @@ public class SendIntentPlugin extends CordovaPlugin {
                         callbackContext.success(response);
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
-                        response.put(Error_CODE, ""404"");
+                        response.put(Error_CODE, "404");
                         response.put(Error_MESSAGE, e.getMessage());
                         callbackContext.error(response.toString());
                     }
