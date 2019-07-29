@@ -43,13 +43,17 @@ public class SendIntentPlugin extends CordovaPlugin {
                     sendIntent(args);
                     return true;
                 case INVALID:
-                    callbackContext.error(Actions.INVALID.getDescription());
+                    response.put(Error_CODE, 500);
+                    response.put(Error_MESSAGE, Actions.INVALID.getDescription());
+                    callbackContext.error(response.toString());
                     return false;
 
             }
         } else {
             Log.v(TAG, Actions.INVALID.getDescription());
-            callbackContext.error(Actions.INVALID.getDescription());
+            response.put(Error_CODE, 500);
+            response.put(Error_MESSAGE, Actions.INVALID.getDescription());
+            callbackContext.error(response.toString());
             return false;
         }
 
@@ -104,7 +108,11 @@ public class SendIntentPlugin extends CordovaPlugin {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            
+            JSONObject response = new JSONObject();
+            response.put(Error_CODE, 500);
+            response.put(Error_MESSAGE, e.getMessage());
+            callbackContext.error(response.toString());
         }
     }
 
@@ -117,7 +125,10 @@ public class SendIntentPlugin extends CordovaPlugin {
         if (this.cordova.getActivity().getPackageManager().resolveActivity(intentLogin, 0) != null) {
             this.cordova.startActivityForResult(this, intentLogin, LOGIN_SUCCESS_CODE);
         } else {
-            callbackContext.error(Actions.INVALID.getDescription());
+            JSONObject response = new JSONObject();
+            response.put(Error_CODE, 500);
+            response.put(Error_MESSAGE, Actions.INVALID.getDescription());
+            callbackContext.error(response.toString());
         }
     }
 
@@ -135,16 +146,24 @@ public class SendIntentPlugin extends CordovaPlugin {
                         callbackContext.success(response);
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
-                        callbackContext.error(e.getMessage());
+                        response.put(Error_CODE, 404);
+                        response.put(Error_MESSAGE, e.getMessage());
+                        callbackContext.error(response.toString());
                     }
                 } else {
-                    callbackContext.error("Error to get the access_token value.");
+                    response.put(Error_CODE, 404);
+                    response.put(Error_MESSAGE, "Error to get the access_token value.");
+                    callbackContext.error(response.toString());
                 }
             } else {
-                callbackContext.error("Error to get the access_token value.");
+                response.put(Error_CODE, 404);
+                response.put(Error_MESSAGE, "Error to get the access_token value.");
+                callbackContext.error(response.toString());
             }
         } else {
-            callbackContext.error("Error to get the access_token value.");
+            response.put(Error_CODE, 404);
+            response.put(Error_MESSAGE, "Error to get the access_token value.");
+            callbackContext.error(response.toString());
         }
     }
 
