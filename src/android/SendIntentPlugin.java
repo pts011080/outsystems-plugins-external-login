@@ -125,34 +125,26 @@ public class SendIntentPlugin extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        JSONObject response = new JSONObject();
         if (resultCode == Activity.RESULT_OK) {
             if (intent.getExtras() != null && intent.getExtras().get(ACCESS_TOKEN) != null) {
                 String accessToken = (String) intent.getExtras().get(ACCESS_TOKEN);
                 if (accessToken != null) {
+                    JSONObject response = new JSONObject();
                     try {
                         response.put(ACCESS_TOKEN, accessToken);
                         callbackContext.success(response);
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
-                        response.put(ERROR_C, 404);
-                        response.put(ERROR_M, e.getMessage());
-                        callbackContext.error(response);
+                        callbackContext.error(e.getMessage());
                     }
                 } else {
-                    response.put(ERROR_C, 404);
-                    response.put(ERROR_M, "Error to get the access_token value.");
-                    callbackContext.error(response);
+                    callbackContext.error("Error to get the access_token value.");
                 }
             } else {
-                response.put(ERROR_C, 404);
-                response.put(ERROR_M, "Error to get the access_token value.");
-                callbackContext.error(response);
+                callbackContext.error("Error to get the access_token value.");
             }
         } else {
-            response.put(ERROR_C, 404);
-            response.put(ERROR_M, "Error to get the access_token value.");
-            callbackContext.error(response);
+            callbackContext.error("Error to get the access_token value.");
         }
     }
 
