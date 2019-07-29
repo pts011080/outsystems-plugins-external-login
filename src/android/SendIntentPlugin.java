@@ -150,8 +150,8 @@ public class SendIntentPlugin extends CordovaPlugin {
 
     private enum Actions {
 
-        SEND_INTENT("sendIntent", "The send intent action is used to execute action in another application."),
-        INVALID("", "Invalid or not found action!");
+        SEND_INTENT("sendIntent", ERROR_CODE_B),
+        INVALID("", ERROR_CODE_A);
 
         private String action;
         private String description;
