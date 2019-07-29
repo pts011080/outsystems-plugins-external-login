@@ -21,6 +21,8 @@ public class SendIntentPlugin extends CordovaPlugin {
 
     private static final String ACTION = "action";
     private static final String INPUT_EXTRAS = "inputExtras";
+    private static final String ERROR_C = "error_code";
+    private static final String ERROR_M = "error_message";
     private static final String ACCESS_TOKEN = "access_token";
 
     /**
@@ -123,26 +125,34 @@ public class SendIntentPlugin extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+        JSONObject response = new JSONObject();
         if (resultCode == Activity.RESULT_OK) {
             if (intent.getExtras() != null && intent.getExtras().get(ACCESS_TOKEN) != null) {
                 String accessToken = (String) intent.getExtras().get(ACCESS_TOKEN);
                 if (accessToken != null) {
-                    JSONObject response = new JSONObject();
                     try {
                         response.put(ACCESS_TOKEN, accessToken);
                         callbackContext.success(response);
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
-                        callbackContext.error(e.getMessage());
+                        response.put(ERROR_C, 404);
+                        response.put(ERROR_M, e.getMessage());
+                        callbackContext.error(response);
                     }
                 } else {
-                    callbackContext.error("Error to get the access_token value.");
+                    response.put(ERROR_C, 404);
+                    response.put(ERROR_M, "Error to get the access_token value.");
+                    callbackContext.error(response);
                 }
             } else {
-                callbackContext.error("Error to get the access_token value.");
+                response.put(ERROR_C, 404);
+                response.put(ERROR_M, "Error to get the access_token value.");
+                callbackContext.error(response);
             }
         } else {
-            callbackContext.error("Error to get the access_token value.");
+            response.put(ERROR_C, 404);
+            response.put(ERROR_M, "Error to get the access_token value.");
+            callbackContext.error(response);
         }
     }
 
