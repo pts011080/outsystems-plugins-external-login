@@ -35,7 +35,8 @@ public class SendIntentPlugin extends CordovaPlugin {
      */
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         this.callbackContext = callbackContext;
-
+    
+        JSONObject response = new JSONObject();
         if (action != null) {
 
             switch (Actions.getActionByName(action)) {
@@ -136,11 +137,11 @@ public class SendIntentPlugin extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+        JSONObject response = new JSONObject();
         if (resultCode == Activity.RESULT_OK) {
             if (intent.getExtras() != null && intent.getExtras().get(ACCESS_TOKEN) != null) {
                 String accessToken = (String) intent.getExtras().get(ACCESS_TOKEN);
                 if (accessToken != null) {
-                    JSONObject response = new JSONObject();
                     try {
                         response.put(ACCESS_TOKEN, accessToken);
                         callbackContext.success(response);
