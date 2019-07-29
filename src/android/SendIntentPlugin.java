@@ -21,8 +21,8 @@ public class SendIntentPlugin extends CordovaPlugin {
 
     private static final String ACTION = "action";
     private static final String INPUT_EXTRAS = "inputExtras";
-    private static final String ERROR_C = "error_code";
-    private static final String ERROR_M = "error_message";
+    private static final String Error_CODE = "error_code";
+    private static final String Error_MESSAGE = "error_message";
     private static final String ACCESS_TOKEN = "access_token";
 
     /**
