@@ -21,9 +21,9 @@ public class SendIntentPlugin extends CordovaPlugin {
 
     private static final String ACTION = "action";
     private static final String INPUT_EXTRAS = "inputExtras";
-    private static final String Error_CODE = "error_code";
-    private static final String Error_MESSAGE = "error_message";
     private static final String ACCESS_TOKEN = "access_token";
+    private static final String ERROR_CODE_A = "500";
+    private static final String ERROR_CODE_B = "404";
 
     /**
      * Executes the request and returns JSONObject
@@ -35,8 +35,7 @@ public class SendIntentPlugin extends CordovaPlugin {
      */
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         this.callbackContext = callbackContext;
-    
-        JSONObject response = new JSONObject();
+
         if (action != null) {
 
             switch (Actions.getActionByName(action)) {
@@ -44,17 +43,13 @@ public class SendIntentPlugin extends CordovaPlugin {
                     sendIntent(args);
                     return true;
                 case INVALID:
-                    response.put(Error_CODE, "500");
-                    response.put(Error_MESSAGE, Actions.INVALID.getDescription());
-                    callbackContext.error(response.toString());
+                    callbackContext.error(ERROR_CODE_A);
                     return false;
 
             }
         } else {
             Log.v(TAG, Actions.INVALID.getDescription());
-            response.put(Error_CODE, "500");
-            response.put(Error_MESSAGE, Actions.INVALID.getDescription());
-            callbackContext.error(response.toString());
+            callbackContext.error(ERROR_CODE_A);
             return false;
         }
 
@@ -109,11 +104,7 @@ public class SendIntentPlugin extends CordovaPlugin {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            
-            JSONObject response = new JSONObject();
-            response.put(Error_CODE, "500");
-            response.put(Error_MESSAGE, e.getMessage());
-            callbackContext.error(response.toString());
+            callbackContext.error(ERROR_CODE_A);
         }
     }
 
@@ -126,10 +117,7 @@ public class SendIntentPlugin extends CordovaPlugin {
         if (this.cordova.getActivity().getPackageManager().resolveActivity(intentLogin, 0) != null) {
             this.cordova.startActivityForResult(this, intentLogin, LOGIN_SUCCESS_CODE);
         } else {
-            JSONObject response = new JSONObject();
-            response.put(Error_CODE, "500");
-            response.put(Error_MESSAGE, Actions.INVALID.getDescription());
-            callbackContext.error(response.toString());
+            callbackContext.error(ERROR_CODE_A);
         }
     }
 
@@ -137,34 +125,26 @@ public class SendIntentPlugin extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        JSONObject response = new JSONObject();
         if (resultCode == Activity.RESULT_OK) {
             if (intent.getExtras() != null && intent.getExtras().get(ACCESS_TOKEN) != null) {
                 String accessToken = (String) intent.getExtras().get(ACCESS_TOKEN);
                 if (accessToken != null) {
+                    JSONObject response = new JSONObject();
                     try {
                         response.put(ACCESS_TOKEN, accessToken);
                         callbackContext.success(response);
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
-                        response.put(Error_CODE, "404");
-                        response.put(Error_MESSAGE, e.getMessage());
-                        callbackContext.error(response.toString());
+                        callbackContext.error(ERROR_CODE_B);
                     }
                 } else {
-                    response.put(Error_CODE, "404");
-                    response.put(Error_MESSAGE, "Error to get the access_token value.");
-                    callbackContext.error(response.toString());
+                    callbackContext.error(ERROR_CODE_B);
                 }
             } else {
-                response.put(Error_CODE, "404");
-                response.put(Error_MESSAGE, "Error to get the access_token value.");
-                callbackContext.error(response.toString());
+                callbackContext.error(ERROR_CODE_B);
             }
         } else {
-            response.put(Error_CODE, "404");
-            response.put(Error_MESSAGE, "Error to get the access_token value.");
-            callbackContext.error(response.toString());
+            callbackContext.error(ERROR_CODE_B);
         }
     }
 
