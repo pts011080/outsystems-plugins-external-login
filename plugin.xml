@@ -10,15 +10,23 @@
 	<!-- <preference name="APP_GROUP_NAME"> -->
 	
 	<platform name="android">
+		<edit-config xmlns:android="http://schemas.android.com/apk/res/android" file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+			<application android:networkSecurityConfig="@xml/network_security_config" />
+		</edit-config>
+			<resource-file src="network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+		</platform>
+		
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="SendIntentPlugin">
 				<param name="android-package"
 					value="com.outsystems.sendintentplugin.SendIntentPlugin" />
 			</feature>
 		</config-file>
-		<!--<edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-			<application android:usesCleartextTraffic="true" />
-		</edit-config> -->
+		
+		<edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+		
 		 <!--<edit-config parent="/manifest" target="AndroidManifest.xml" mode="merge">
 			<manifest android:sharedUserId="$APP_GROUP_NAME"/>
 		</edit-config> -->
