@@ -16,6 +16,9 @@
 					value="com.outsystems.sendintentplugin.SendIntentPlugin" />
 			</feature>
 		</config-file>
+		<edit-config parent="/manifest" target="AndroidManifest.xml" mode="merge">
+			<application android:usesCleartextTraffic="true" />
+		</edit-config>
 		 <!--<edit-config parent="/manifest" target="AndroidManifest.xml" mode="merge">
 			<manifest android:sharedUserId="$APP_GROUP_NAME"/>
 		</edit-config> -->
