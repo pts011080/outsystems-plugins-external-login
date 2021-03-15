@@ -17,6 +17,12 @@
 			</feature>
 		</config-file>
 		
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<queries>
+				<package android:name="com.midland.appstore" />
+				<package android:name="com.hkp.appstore" />
+			</queries>
+		</config-file>
 		<!--<edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" />
         </edit-config>-->
