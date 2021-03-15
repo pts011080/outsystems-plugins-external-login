@@ -17,7 +17,7 @@
 			</feature>
 		</config-file>
 		
-		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<queries>
 				<package android:name="com.midland.appstore" />
 				<package android:name="com.hkp.appstore" />
