@@ -133,29 +133,23 @@ public class SendIntentPlugin extends CordovaPlugin {
                     JSONObject response = new JSONObject();
                     try {
                         response.put(ACCESS_TOKEN, accessToken); 
-                        System.out.println("accessToken: "+accessToken);
                         //check if also contain device id
                         if (intent.getExtras() != null && intent.getExtras().get(DEVICE_ID) != null) {
                             String devicId = (String) intent.getExtras().get(DEVICE_ID);
-                            System.out.println("devicId: "+devicId);
                             if (devicId != null) {
                                 try {
                                     response.put(DEVICE_ID, devicId);
-                                    System.out.println("return accesstoken: "+accessToken+" and device ID: "+devicId);
                                     callbackContext.success(response); //return both Access token and device Id
                                 } catch (JSONException e) {
                                     Log.v(TAG, e.getMessage());
-                                    System.out.println("device id is NULL 3: "+e.getMessage());
                                     //callbackContext.error(ERROR_CODE_B);
                                     callbackContext.success(response); //only return access token
                                 }
                             } else {
-                            System.out.println("device id is NULL 2");
                                 //callbackContext.error(ERROR_CODE_B);
                                 callbackContext.success(response); //only return access token
                             }
                         } else {
-                            System.out.println("device id is NULL 1");
                             //callbackContext.error(ERROR_CODE_B);
                             callbackContext.success(response); //only return access token
                         }
