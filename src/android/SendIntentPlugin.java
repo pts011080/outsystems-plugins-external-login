@@ -22,6 +22,7 @@ public class SendIntentPlugin extends CordovaPlugin {
     private static final String ACTION = "action";
     private static final String INPUT_EXTRAS = "inputExtras";
     private static final String ACCESS_TOKEN = "access_token";
+    private static final String DEVICE_ID = "device_id";
     private static final String ERROR_CODE_A = "500";
     private static final String ERROR_CODE_B = "404";
 
@@ -131,8 +132,28 @@ public class SendIntentPlugin extends CordovaPlugin {
                 if (accessToken != null) {
                     JSONObject response = new JSONObject();
                     try {
-                        response.put(ACCESS_TOKEN, accessToken);
-                        callbackContext.success(response);
+                        response.put(ACCESS_TOKEN, accessToken); 
+                        //check if also contain device id
+                        if (intent.getExtras() != null && intent.getExtras().get(DEVICE_ID) != null) {
+                            String devicId = (String) intent.getExtras().get(DEVICE_ID);
+                            if (devicId != null) {
+                                JSONObject response = new JSONObject();
+                                try {
+                                    response.put(DEVICE_ID, devicId);
+                                    callbackContext.success(response); //return both Access token and device Id
+                                } catch (JSONException e) {
+                                    Log.v(TAG, e.getMessage());
+                                    //callbackContext.error(ERROR_CODE_B);
+                                    callbackContext.success(response); //only return access token
+                                }
+                            } else {
+                                //callbackContext.error(ERROR_CODE_B);
+                                callbackContext.success(response); //only return access token
+                            }
+                        } else {
+                            //callbackContext.error(ERROR_CODE_B);
+                            callbackContext.success(response); //only return access token
+                        }
                     } catch (JSONException e) {
                         Log.v(TAG, e.getMessage());
                         callbackContext.error(ERROR_CODE_B);
