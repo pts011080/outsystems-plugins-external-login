@@ -137,7 +137,6 @@ public class SendIntentPlugin extends CordovaPlugin {
                         if (intent.getExtras() != null && intent.getExtras().get(DEVICE_ID) != null) {
                             String devicId = (String) intent.getExtras().get(DEVICE_ID);
                             if (devicId != null) {
-                                JSONObject response = new JSONObject();
                                 try {
                                     response.put(DEVICE_ID, devicId);
                                     callbackContext.success(response); //return both Access token and device Id
